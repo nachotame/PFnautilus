@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">PFnautilus</string>
     <string name="action_settings">Settings</string>
-    <string name="mtextview">Hello World!</string>
+    <string name="mtextview"></string>
 </resources>

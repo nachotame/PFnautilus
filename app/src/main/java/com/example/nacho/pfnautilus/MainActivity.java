@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mtextview=(TextView) findViewById(R.id.mtextview);
+        //llama al metodo  para que se ejecute en el metodo principal
+        apiLluvia(null);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public void apiLluvia (View v){
         //instanciamos la respuesta queue
         RequestQueue llamada = Volley.newRequestQueue(this);
-        String url="api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=1a3a9ef7c45a8d64f5f26a847eaa2734\n";
+        String url="api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=1a3a9ef7c45a8d64f5f26a847eaa2734";
 
         //solicitud de llamada de respuesta de URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
