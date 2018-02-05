@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     public void apiLluvia (View v){
         //instanciamos la respuesta queue
         RequestQueue llamada = Volley.newRequestQueue(this);
-        String url="api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=1a3a9ef7c45a8d64f5f26a847eaa2734";
+        String url="http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=1a3a9ef7c45a8d64f5f26a847eaa2734";
 
         //solicitud de llamada de respuesta de URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
