@@ -49,9 +49,25 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONObject json = new JSONObject(response);// mainObject van dentrto todos los cirdendadas
                             JSONObject main=  json.getJSONObject("main");
+                            JSONObject clouds=json.getJSONObject("clouds");
+                            JSONObject sSol=json.getJSONObject("sys");
+
 
                             Weather wheather =new Weather();//objeto de la clase wheather para meter los datos
+                            //DENTRO DEL MAIN
                             wheather.setTemp(main.getDouble("temp"));//metemos dentro de settemo los datos del objeto
+                            wheather.setHumidity(main.getDouble("humidity"));
+                            wheather.setTempMax(main.getDouble("temp_max"));
+                            wheather.setTempMin(main.getDouble("temp_min"));
+
+                            wheather.setNubosidad(clouds.getDouble("clouds.all"));
+                            wheather.setSalidaSol(sSol.getLong("sys.sunrise"));
+                            wheather.setPuestaSol(sSol.getLong("sys.sunset"));
+
+
+
+
+
 
                             //tienes que poner que TIPO de objeto va a recoger si no dará error
 
