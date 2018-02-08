@@ -22,7 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-    TextView mtextview;
+    TextView mHorasSol;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,23 +31,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mtextview=(TextView) findViewById(R.id.mtextview);
+        mHorasSol=(TextView) findViewById(R.id.tvHorasSol);
         //llama al metodo  para que se ejecute en el metodo principal
         apiLluvia(null);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
     }
     public void apiLluvia (View v){
         //instanciamos la respuesta queue
         RequestQueue llamada = Volley.newRequestQueue(this);
-        String url="http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=1a3a9ef7c45a8d64f5f26a847eaa2734";
+        String url="http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=1a3a9ef7c45a8d64f5f26a847eaa2734";
 
         //solicitud de llamada de respuesta de URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -55,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject mainObject = new JSONObject(response);
-                            mtextview.setText(mainObject.getString("city"));
+                            JSONObject json = new JSONObject(response);// mainObject van dentrto todos los cirdendadas
+                            JSONObject main=  json.getJSONObject("main");
+                            double temp=main.getDouble("temp");
+                            mHorasSol.setText(""+temp);
                             //tienes que poner que TIPO de objeto va a recoger si no dará error
 
                         } catch (JSONException jsone) {
@@ -67,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mtextview.setText(error.getMessage());
+                mHorasSol.setText(error.getMessage());
 
             }
         });
