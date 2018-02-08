@@ -1,9 +1,6 @@
 package com.example.nacho.pfnautilus;
 
-import android.app.DownloadManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -52,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONObject json = new JSONObject(response);// mainObject van dentrto todos los cirdendadas
                             JSONObject main=  json.getJSONObject("main");
-                            double temp=main.getDouble("temp");
-                            mHorasSol.setText(""+temp);
+
+                            Weather wheather =new Weather();//objeto de la clase wheather para meter los datos
+                            wheather.setTemp(main.getDouble("temp"));//metemos dentro de settemo los datos del objeto
+
                             //tienes que poner que TIPO de objeto va a recoger si no dará error
 
                         } catch (JSONException jsone) {
