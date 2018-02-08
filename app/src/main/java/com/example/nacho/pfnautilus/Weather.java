@@ -59,9 +59,7 @@ public class Weather {
     }
 
     public void  alertas(){
-        String lluvia="Va a llover muy fuerte".toString();
-        String sol="disfrute de la naturaleza".toString();
-        String abrigase="Coja una chaqueta, o dos".toString();
+
 
     }
 
