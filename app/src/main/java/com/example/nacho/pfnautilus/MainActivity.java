@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -20,6 +21,9 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     TextView mHorasSol;
+    ImageView imgcambiot;
+    TextView mTemp;
+    TextView mHoras;
 
 
     @Override
@@ -29,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mHorasSol=(TextView) findViewById(R.id.tvHorasSol);
+        imgcambiot=(ImageView) findViewById(R.id.imageView);
+        mTemp=(TextView) findViewById(R.id.tvTemp);
+        mHoras=(TextView) findViewById(R.id.tvHRestantes);
+        Weather gWeather =new Weather();
+        mTemp.setText(Double.toString(gWeather.getTemp()));//Lo he conseguido!!!
         //llama al metodo  para que se ejecute en el metodo principal
         apiLluvia(null);
 
@@ -47,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject json = new JSONObject(response);// mainObject van dentrto todos los cirdendadas
-                            JSONObject main=  json.getJSONObject("main");
+                            JSONObject json = new JSONObject(response);// json van todos los contenidos de la api
+                            JSONObject main=  json.getJSONObject("main");//objeto principal del json{dentro hay más}
                             JSONObject clouds=json.getJSONObject("clouds");
                             JSONObject sSol=json.getJSONObject("sys");
 
@@ -87,6 +96,20 @@ public class MainActivity extends AppCompatActivity {
         llamada.add(stringRequest);
     }
 
+    public void cambioImagen(){
+        Weather wheather=new  Weather();
+        if(wheather.getNubosidad()>80 && wheather.getHumidity()>80){
+        //imgcambiot.setImageBitmap();
+        }
+        else{
+          //  imgcambiot.setImageBitmap();
+        }
+
+    }
+
+     public void horasSolRestante(){
+
+     }
 
 
     @Override

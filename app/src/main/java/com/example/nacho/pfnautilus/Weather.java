@@ -30,6 +30,34 @@ public class Weather {
 
     }
 
+    public double getTemp() {
+        return temp;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public double getTempMax() {
+        return tempMax;
+    }
+
+    public double getTempMin() {
+        return tempMin;
+    }
+
+    public double getNubosidad() {
+        return nubosidad;
+    }
+
+    public long getSalidaSol() {
+        return salidaSol;
+    }
+
+    public long getPuestaSol() {
+        return puestaSol;
+    }
+
     public void setTemp(double temp) {
         this.temp = temp;
     }
