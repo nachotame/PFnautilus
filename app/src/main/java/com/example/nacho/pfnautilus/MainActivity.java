@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mHoraActual;
     TextView mciudad;
     TextView mtempMaxMin;
+    ListView mDatosJson;
 
 
 
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                             mciudad.setText(""+json.get("name"));//Iujuuu!!!//string Metido
+
                             Weather wheather =new Weather();//objeto de la clase wheather para meter los datos
                             //DENTRO DEL MAIN
                             wheather.setTemp(main.getDouble("temp"));//metemos dentro de settemo los datos del objeto
