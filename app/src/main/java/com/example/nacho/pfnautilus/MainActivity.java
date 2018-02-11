@@ -19,11 +19,17 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class MainActivity extends AppCompatActivity {
     TextView mHorasSol;
     ImageView imgcambiot;
     TextView mTemp;
-    TextView mHoras;
+    TextView mHoraActual;
+    TextView mciudad;
+    TextView mtempMaxMin;
+
 
 
     @Override
@@ -32,14 +38,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mHorasSol=(TextView) findViewById(R.id.tvHorasSol);
         imgcambiot=(ImageView) findViewById(R.id.imageView);
-        mTemp=(TextView) findViewById(R.id.tvTemp);
-        mHoras=(TextView) findViewById(R.id.tvHRestantes);
+        mTemp=(TextView) findViewById(R.id.tvTempActu);
+        mHoraActual=(TextView) findViewById(R.id.tvhoraActual);
+        mciudad=(TextView)findViewById(R.id.tvCiudad);
+        mtempMaxMin=(TextView)findViewById(R.id.tvTMxMIn);
+
         Weather gWeather =new Weather();
+        mtempMaxMin.setText(gWeather.getInfoTemMaxMin());
         mTemp.setText(Double.toString(gWeather.getTemp()));//Lo he conseguido!!!
         //llama al metodo  para que se ejecute en el metodo principal
         apiLluvia(null);
+        horaActual();
+        cambioImagen();
 
 
 
@@ -62,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject sSol=json.getJSONObject("sys");
 
 
+                            mciudad.setText(""+json.get("name"));//Iujuuu!!!//string Metido
                             Weather wheather =new Weather();//objeto de la clase wheather para meter los datos
                             //DENTRO DEL MAIN
                             wheather.setTemp(main.getDouble("temp"));//metemos dentro de settemo los datos del objeto
@@ -107,7 +119,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-     public void horasSolRestante(){
+     public void horaActual(){
+         Calendar calendario=Calendar.getInstance();
+         Calendar calendarioG=new GregorianCalendar();
+         long hora,minutos,segundos;
+         hora=calendario.get(Calendar.HOUR_OF_DAY);
+         minutos=calendario.get(Calendar.MINUTE);
+         segundos=calendario.get(Calendar.SECOND);
+         String horaActual=hora+":"+minutos;
+         mHoraActual.setText(horaActual);
 
      }
 
@@ -132,5 +152,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+
     }
 }

@@ -54,8 +54,9 @@ public class Weather {
         return salidaSol;
     }
 
-    public long getPuestaSol() {
-        return puestaSol;
+    public String getInfoTemMaxMin(){
+        String infoTMmin=""+tempMin+" <> "+tempMax;
+        return  infoTMmin;
     }
 
     public void setTemp(double temp) {
