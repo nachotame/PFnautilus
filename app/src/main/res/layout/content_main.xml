@@ -78,18 +78,17 @@
     <TextView
         android:id="@+id/tvTempActu"
         android:layout_width="65dp"
-        android:layout_height="29dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="52dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTMin"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.888"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvhoraActual"
+        app:layout_constraintTop_toTopOf="@+id/tvTMin"
         app:layout_constraintVertical_bias="0.53" />
 
     <TextView
@@ -97,10 +96,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintEnd_toEndOf="@+id/tvTMin"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/tvTMin"
-        tools:layout_editor_absoluteX="308dp" />
+        app:layout_constraintVertical_bias="0.543" />
 
 </android.support.constraint.ConstraintLayout>

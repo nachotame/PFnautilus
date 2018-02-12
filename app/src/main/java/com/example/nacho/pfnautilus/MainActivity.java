@@ -1,5 +1,8 @@
 package com.example.nacho.pfnautilus;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Weather gWeather =new Weather();
         //llama al metodo  para que se ejecute en el metodo principal
+        compruebaConexion(this);
         apiLluvia(null);
         horaActual();
         cambioImagen();
@@ -92,9 +97,9 @@ public class MainActivity extends AppCompatActivity {
                             wheather.setSalidaSol(sSol.getLong("sunrise"));
                             wheather.setPuestaSol(sSol.getLong("sunset"));
 
-                            mTemp.setText(String.format("%.1f",wheather.getTemp()));
-                           // mtempMin.setText(String.format("%.1f","Tº Min"+wheather.toCelsius(wheather.getTempMin())));
-                           // mtempMax.setText(String.format("%.1f","Tº Max"+wheather.toCelsius(wheather.getTempMax())));
+                            mTemp.setText("Ahora\n"+String.format("%.1f",wheather.toCelsius(wheather.getTemp()))+"ºC");
+                            mtempMin.setText("T-Min\n"+String.format("%.1f",wheather.toCelsius(wheather.getTempMin()))+"ºC");
+                            mtempMax.setText("T-Max\n"+String.format("%.1f",wheather.toCelsius(wheather.getTempMax()))+"ºC");
 
 
 
@@ -143,6 +148,26 @@ public class MainActivity extends AppCompatActivity {
          mHoraActual.setText(horaActual);
 
      }
+    public static boolean compruebaConexion(Context context)
+    {
+        boolean connected = false;
+        ConnectivityManager connec = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Recupera todas las redes (tanto móviles como wifi)
+        NetworkInfo[] redes = connec.getAllNetworkInfo();
+
+        for (int i = 0; i < redes.length; i++) {
+            // Si alguna red tiene conexión, se devuelve true
+            if (redes[i].getState() == NetworkInfo.State.CONNECTED) {
+                connected = true;
+            }
+        }
+        if (connected==false){
+            Toast.makeText(context,"No tiene conexión a internet",Toast.LENGTH_LONG);
+            Toast.makeText(context,"Puede que su aplicación estalle",Toast.LENGTH_SHORT);
+        }
+        return connected;
+    }
 
 
 
