@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     TextView mTemp;
     TextView mHoraActual;
     TextView mciudad;
-    TextView mtempMaxMin;
+    TextView mtempMin;
+    TextView mtempMax;
     ListView mDatosJson;
 
 
@@ -44,11 +45,10 @@ public class MainActivity extends AppCompatActivity {
         mTemp=(TextView) findViewById(R.id.tvTempActu);
         mHoraActual=(TextView) findViewById(R.id.tvhoraActual);
         mciudad=(TextView)findViewById(R.id.tvCiudad);
-        mtempMaxMin=(TextView)findViewById(R.id.tvTMxMIn);
+        mtempMin=(TextView)findViewById(R.id.tvTMin);
+        mtempMax=(TextView)findViewById(R.id.tvtMax);
 
-        Weather gWeather =new Weather();
-        mtempMaxMin.setText(gWeather.getInfoTemMaxMin());
-        mTemp.setText(Double.toString(gWeather.getTemp()));//Lo he conseguido!!!
+        //Weather gWeather =new Weather();
         //llama al metodo  para que se ejecute en el metodo principal
         apiLluvia(null);
         horaActual();
@@ -58,9 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void apiLluvia (View v){
+
+        String latitud="-0.39";
+        String longitud="39.48";
         //instanciamos la respuesta queue
         RequestQueue llamada = Volley.newRequestQueue(this);
-        String url="http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=1a3a9ef7c45a8d64f5f26a847eaa2734";
+        String url="http://api.openweathermap.org/data/2.5/weather?lat="+latitud+"&lon="+longitud+"&appid=1a3a9ef7c45a8d64f5f26a847eaa2734";
+
 
         //solicitud de llamada de respuesta de URL
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -84,9 +88,14 @@ public class MainActivity extends AppCompatActivity {
                             wheather.setTempMax(main.getDouble("temp_max"));
                             wheather.setTempMin(main.getDouble("temp_min"));
 
-                            wheather.setNubosidad(clouds.getDouble("clouds.all"));
-                            wheather.setSalidaSol(sSol.getLong("sys.sunrise"));
-                            wheather.setPuestaSol(sSol.getLong("sys.sunset"));
+                            wheather.setNubosidad(clouds.getDouble("all"));
+                            wheather.setSalidaSol(sSol.getLong("sunrise"));
+                            wheather.setPuestaSol(sSol.getLong("sunset"));
+
+                            mTemp.setText(String.format("%.1f","Tº Actual"+wheather.getTemp()));
+                            mtempMin.setText(String.format("%.1f","Tº Min"+wheather.toCelsius(wheather.getTempMin())));
+                            mtempMax.setText(String.format("%.1f","Tº Max"+wheather.toCelsius(wheather.getTempMax())));
+
 
 
 
@@ -103,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mHorasSol.setText(error.getMessage());
+                mciudad.setText(error.getMessage());
 
             }
         });
@@ -111,10 +120,11 @@ public class MainActivity extends AppCompatActivity {
         llamada.add(stringRequest);
     }
 
-    public void cambioImagen(){
+    public void cambioImagen(){//Continuar en casa
         Weather wheather=new  Weather();
         if(wheather.getNubosidad()>80 && wheather.getHumidity()>80){
         //imgcambiot.setImageBitmap();
+            //imgcambiot.setImageResource(R.drawable.icono_sol);
         }
         else{
           //  imgcambiot.setImageBitmap();
@@ -133,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
          mHoraActual.setText(horaActual);
 
      }
+
 
 
     @Override

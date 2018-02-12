@@ -39,6 +39,7 @@ public class Weather {
     }
 
     public double getTempMax() {
+
         return tempMax;
     }
 
@@ -54,10 +55,7 @@ public class Weather {
         return salidaSol;
     }
 
-    public String getInfoTemMaxMin(){
-        String infoTMmin=""+tempMin+" <> "+tempMax;
-        return  infoTMmin;
-    }
+
 
     public void setTemp(double temp) {
         this.temp = temp;
@@ -89,6 +87,10 @@ public class Weather {
 
     public void  alertas(){
 
+
+    }
+    public double toCelsius(double temp){
+        return temp-273.15;
 
     }
 
