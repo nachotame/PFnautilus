@@ -92,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
                             wheather.setSalidaSol(sSol.getLong("sunrise"));
                             wheather.setPuestaSol(sSol.getLong("sunset"));
 
-                            mTemp.setText(String.format("%.1f","Tº Actual"+wheather.getTemp()));
-                            mtempMin.setText(String.format("%.1f","Tº Min"+wheather.toCelsius(wheather.getTempMin())));
-                            mtempMax.setText(String.format("%.1f","Tº Max"+wheather.toCelsius(wheather.getTempMax())));
+                            mTemp.setText(String.format("%.1f",wheather.getTemp()));
+                           // mtempMin.setText(String.format("%.1f","Tº Min"+wheather.toCelsius(wheather.getTempMin())));
+                           // mtempMax.setText(String.format("%.1f","Tº Max"+wheather.toCelsius(wheather.getTempMax())));
 
 
 
