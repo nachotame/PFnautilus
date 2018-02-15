@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void apiLluvia (View v){
 
-        String latitud="1";
+        String latitud="15";
         String longitud="39.48";
         //instanciamos la respuesta queue
         RequestQueue llamada = Volley.newRequestQueue(this);
