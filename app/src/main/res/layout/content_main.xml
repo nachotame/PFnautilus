@@ -8,13 +8,6 @@
     tools:context="com.example.nacho.pfnautilus.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="387dp"
-        android:layout_height="252dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="258dp" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="205dp"
@@ -22,13 +15,13 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintBottom_toTopOf="@+id/listView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCiudad"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/tvtMax"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@android:color/holo_blue_bright" />
 
     <TextView
@@ -49,18 +42,15 @@
         android:id="@+id/tvTMin"
         android:layout_width="77dp"
         android:layout_height="34dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="4dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/tvhoraActual"
-        app:layout_constraintVertical_bias="0.111" />
+        app:layout_constraintTop_toBottomOf="@+id/tvhoraActual" />
 
     <TextView
         android:id="@+id/tvCiudad"
@@ -95,15 +85,24 @@
         android:id="@+id/tvtMax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/listView"
         app:layout_constraintEnd_toEndOf="@+id/tvTMin"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/tvTMin"
-        app:layout_constraintVertical_bias="0.543" />
+        app:layout_constraintStart_toStartOf="@+id/tvTMin"
+        app:layout_constraintTop_toBottomOf="@+id/tvTMin" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="368dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

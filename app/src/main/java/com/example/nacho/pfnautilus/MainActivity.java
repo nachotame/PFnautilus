@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     TextView mtempMax;
     ListView mDatosJson;
 
+    Weather weather;
+
 
 
     @Override
@@ -54,17 +56,17 @@ public class MainActivity extends AppCompatActivity {
 
         //Weather gWeather =new Weather();
         //llama al metodo  para que se ejecute en el metodo principal
-        compruebaConexion(this);
+
+
+        compruebaConexion(MainActivity.this);
         apiLluvia(null);
-        horaActual();
-        cambioImagen();
 
 
 
     }
     public void apiLluvia (View v){
 
-        String latitud="-0.39";
+        String latitud="1";
         String longitud="39.48";
         //instanciamos la respuesta queue
         RequestQueue llamada = Volley.newRequestQueue(this);
@@ -86,21 +88,23 @@ public class MainActivity extends AppCompatActivity {
 
                             mciudad.setText(""+json.get("name"));//Iujuuu!!!//string Metido
 
-                            Weather wheather =new Weather();//objeto de la clase wheather para meter los datos
+                            weather=new Weather();//objeto de la clase wheather para meter los datos
                             //DENTRO DEL MAIN
-                            wheather.setTemp(main.getDouble("temp"));//metemos dentro de settemo los datos del objeto
-                            wheather.setHumidity(main.getDouble("humidity"));
-                            wheather.setTempMax(main.getDouble("temp_max"));
-                            wheather.setTempMin(main.getDouble("temp_min"));
+                            weather.setTemp(main.getDouble("temp"));//metemos dentro de settemo los datos del objeto
+                            weather.setHumidity(main.getDouble("humidity"));
+                            weather.setTempMax(main.getDouble("temp_max"));
+                            weather.setTempMin(main.getDouble("temp_min"));
 
-                            wheather.setNubosidad(clouds.getDouble("all"));
-                            wheather.setSalidaSol(sSol.getLong("sunrise"));
-                            wheather.setPuestaSol(sSol.getLong("sunset"));
+                            weather.setNubosidad(clouds.getDouble("all"));
+                            weather.setSalidaSol(sSol.getLong("sunrise"));
+                            weather.setPuestaSol(sSol.getLong("sunset"));
 
-                            mTemp.setText("Ahora\n"+String.format("%.1f",wheather.toCelsius(wheather.getTemp()))+"ºC");
-                            mtempMin.setText("T-Min\n"+String.format("%.1f",wheather.toCelsius(wheather.getTempMin()))+"ºC");
-                            mtempMax.setText("T-Max\n"+String.format("%.1f",wheather.toCelsius(wheather.getTempMax()))+"ºC");
+                            mTemp.setText("Ahora\n"+String.format("%.1f",weather.toCelsius(weather.getTemp()))+"ºC");
+                            mtempMin.setText("T-Min\n"+String.format("%.1f",weather.toCelsius(weather.getTempMin()))+"ºC");
+                            mtempMax.setText("T-Max\n"+String.format("%.1f",weather.toCelsius(weather.getTempMax()))+"ºC");
 
+                            cambioImagen();
+                            horaActual();
 
 
 
@@ -121,34 +125,41 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    //añade solicitud cola de respuesta
+        //añade solicitud cola de respuesta
         llamada.add(stringRequest);
     }
 
     public void cambioImagen(){//Continuar en casa
-        Weather wheather=new  Weather();
-        if(wheather.getNubosidad()>80 && wheather.getHumidity()>80){
-        //imgcambiot.setImageBitmap();
-            //imgcambiot.setImageResource(R.drawable.icono_sol);
+
+        if(weather.getNubosidad()>=80 && weather.getHumidity()>=80){
+
+            imgcambiot.setImageResource(R.drawable.bajolluvia);
         }
+
         else{
-          //  imgcambiot.setImageBitmap();
+           imgcambiot.setImageResource(R.drawable.solvida);
         }
+
+        Toast.makeText(this,"No foto",Toast.LENGTH_SHORT).show();
 
     }
 
-     public void horaActual(){
-         Calendar calendario=Calendar.getInstance();
-         Calendar calendarioG=new GregorianCalendar();
-         long hora,minutos,segundos;
-         hora=calendario.get(Calendar.HOUR_OF_DAY);
-         minutos=calendario.get(Calendar.MINUTE);
-         segundos=calendario.get(Calendar.SECOND);
-         String horaActual=hora+":"+minutos;
-         mHoraActual.setText(horaActual);
+    public void horaActual(){
+        Calendar calendario=Calendar.getInstance();
+        Calendar calendarioG=new GregorianCalendar();
+        long hora,minutos,segundos;
+        hora=calendario.get(Calendar.HOUR_OF_DAY);
+        minutos=calendario.get(Calendar.MINUTE);
+        segundos=calendario.get(Calendar.SECOND);
+        String horaActual=hora+":"+minutos;
 
-     }
-    public static boolean compruebaConexion(Context context)
+
+
+        mHoraActual.setText(horaActual);
+
+    }
+
+    public  boolean compruebaConexion(Context context)
     {
         boolean connected = false;
         ConnectivityManager connec = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -162,9 +173,9 @@ public class MainActivity extends AppCompatActivity {
                 connected = true;
             }
         }
-        if (connected==false){
-            Toast.makeText(context,"No tiene conexión a internet",Toast.LENGTH_LONG);
-            Toast.makeText(context,"Puede que su aplicación estalle",Toast.LENGTH_SHORT);
+        if (!connected){
+            Toast.makeText(this,"No tiene conexión a internet",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,"Puede que su aplicación estalle",Toast.LENGTH_SHORT).show();
         }
         return connected;
     }
