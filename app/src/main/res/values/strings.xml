@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">PFnautilus</string>
+    <string name="app_name">IGNACIO BUENO</string>
     <string name="action_settings">Settings</string>
     <string name="mtextview"></string>
     <string name="tvhorasSol"></string>
+    <string name="textview">TextView</string>
 </resources>

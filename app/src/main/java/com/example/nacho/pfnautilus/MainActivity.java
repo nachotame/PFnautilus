@@ -1,9 +1,16 @@
 package com.example.nacho.pfnautilus;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -36,9 +43,14 @@ public class MainActivity extends AppCompatActivity {
     TextView mtempMin;
     TextView mtempMax;
     ListView mDatosJson;
+    TextView nota;
+    double longitud;
+    double latitud;
+    Location location;
+    LocationManager locationManager;
+
 
     Weather weather;
-
 
 
     @Override
@@ -47,12 +59,47 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        imgcambiot=(ImageView) findViewById(R.id.imageView);
-        mTemp=(TextView) findViewById(R.id.tvTempActu);
-        mHoraActual=(TextView) findViewById(R.id.tvhoraActual);
-        mciudad=(TextView)findViewById(R.id.tvCiudad);
-        mtempMin=(TextView)findViewById(R.id.tvTMin);
-        mtempMax=(TextView)findViewById(R.id.tvtMax);
+        imgcambiot = (ImageView) findViewById(R.id.imageView);
+        mTemp = (TextView) findViewById(R.id.tvTempActu);
+        mHoraActual = (TextView) findViewById(R.id.tvhoraActual);
+        mciudad = (TextView) findViewById(R.id.tvCiudad);
+        mtempMin = (TextView) findViewById(R.id.tvTMin);
+        mtempMax = (TextView) findViewById(R.id.tvtMax);
+        nota=(TextView)findViewById(R.id.tvNota);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,}, 1000);
+        } else{
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+
+            Location location = locationManager.getLastKnownLocation(locationManager
+                    .getBestProvider(criteria, false));
+            latitud = location.getLatitude();
+            longitud = location.getLongitude();
+
+        }
+
+        /*
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                return;
+            } else {
+                latitud= location.getLatitude();
+                longitud=location.getLongitude();
+            }
+        }
+        //******
+       /* if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            Toast.makeText(this,"el GPS esta desactivado",Toast.LENGTH_SHORT).show();
+        }
+        //****
+        */
 
         //Weather gWeather =new Weather();
         //llama al metodo  para que se ejecute en el metodo principal
@@ -61,13 +108,13 @@ public class MainActivity extends AppCompatActivity {
         compruebaConexion(MainActivity.this);
         apiLluvia(null);
 
+        //
 
 
     }
     public void apiLluvia (View v){
 
-        String latitud="15";
-        String longitud="39.48";
+
         //instanciamos la respuesta queue
         RequestQueue llamada = Volley.newRequestQueue(this);
         String url="http://api.openweathermap.org/data/2.5/weather?lat="+latitud+"&lon="+longitud+"&appid=1a3a9ef7c45a8d64f5f26a847eaa2734";
@@ -129,28 +176,37 @@ public class MainActivity extends AppCompatActivity {
         llamada.add(stringRequest);
     }
 
+
+
     public void cambioImagen(){//Continuar en casa
 
         if(weather.getNubosidad()>=80 && weather.getHumidity()>=80){
 
             imgcambiot.setImageResource(R.drawable.bajolluvia);
+            nota.setText("Según como lo veo, si quieres el arco \n iris,  tienes que aguantar la lluvia.\n-Dolly Parton-");
+            Toast.makeText(this,"Frio y Lluvia nos llega",Toast.LENGTH_LONG).show();
+
         }
 
         else{
-           imgcambiot.setImageResource(R.drawable.solvida);
+            imgcambiot.setImageResource(R.drawable.solvida);
+            nota.setText("Cada día el sol ilumina un mundo nuevo.\n-Paulo Coelho-");
+
+            Toast.makeText(this,"Sonría, hoy es día de salir a caminar",Toast.LENGTH_LONG).show();
+
         }
 
-        Toast.makeText(this,"No foto",Toast.LENGTH_SHORT).show();
 
     }
 
     public void horaActual(){
-        Calendar calendario=Calendar.getInstance();
-        Calendar calendarioG=new GregorianCalendar();
-        long hora,minutos,segundos;
-        hora=calendario.get(Calendar.HOUR_OF_DAY);
-        minutos=calendario.get(Calendar.MINUTE);
-        segundos=calendario.get(Calendar.SECOND);
+        Calendar calendario=new GregorianCalendar();
+        String hora;
+        String minutos;
+        String segundos;
+        hora=Long.toString(calendario.get(Calendar.HOUR_OF_DAY));
+        minutos=Long.toString(calendario.get(Calendar.MINUTE));
+        //segundos=calendario.get(Calendar.SECOND);
         String horaActual=hora+":"+minutos;
 
 
@@ -175,7 +231,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if (!connected){
             Toast.makeText(this,"No tiene conexión a internet",Toast.LENGTH_SHORT).show();
-            Toast.makeText(MainActivity.this,"Puede que su aplicación estalle",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,"Puede que su aplicación estalle",Toast.LENGTH_LONG).show();
+            finish();
         }
         return connected;
     }
