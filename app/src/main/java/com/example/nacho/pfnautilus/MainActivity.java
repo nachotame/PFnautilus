@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //añade solicitud cola de respuesta
+        //añade solicitud cola de //respuesta
         llamada.add(stringRequest);
     }
 
