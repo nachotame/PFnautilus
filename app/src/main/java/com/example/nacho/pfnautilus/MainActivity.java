@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         if(weather.getNubosidad()>=80 && weather.getHumidity()>=80){
 
             imgcambiot.setImageResource(R.drawable.bajolluvia);
-            nota.setText("Según como lo veo, si quieres el arco \n iris,  tienes que aguantar la lluvia.\n-Dolly Parton-");
+            nota.setText("Según como lo veo, si quieres el arco iris,\n  tienes que aguantar la lluvia.\n-Dolly Parton-");
             Toast.makeText(this,"Frio y Lluvia nos llega",Toast.LENGTH_LONG).show();
 
         }
@@ -201,17 +201,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void horaActual(){
         Calendar calendario=new GregorianCalendar();
-        String hora;
+        int hora;
         String minutos;
         String segundos;
-        hora=Long.toString(calendario.get(Calendar.HOUR_OF_DAY));
-        minutos=Long.toString(calendario.get(Calendar.MINUTE));
-        //segundos=calendario.get(Calendar.SECOND);
-        String horaActual=hora+":"+minutos;
+        hora=(calendario.get(Calendar.HOUR_OF_DAY));
+        if(hora<=12) {
+            String horaActualAM = "Última actualización\n" + hora+" horas" + " am";
+            mHoraActual.setText(horaActualAM);
+
+        }else{
+            String horaActualPM = "Última actualización\n" + hora +" horas" + " pm";
+            mHoraActual.setText(horaActualPM);
+
+
+        }
 
 
 
-        mHoraActual.setText(horaActual);
+
 
     }
 
