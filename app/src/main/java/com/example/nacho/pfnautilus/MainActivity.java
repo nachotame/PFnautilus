@@ -206,11 +206,11 @@ public class MainActivity extends AppCompatActivity {
         String segundos;
         hora=(calendario.get(Calendar.HOUR_OF_DAY));
         if(hora<=12) {
-            String horaActualAM = "Última actualización\n" + hora+" horas" + " am";
+            String horaActualAM = "Última actualización\n" +"A las" + hora+" horas" + " am";
             mHoraActual.setText(horaActualAM);
 
         }else{
-            String horaActualPM = "Última actualización\n" + hora +" horas" + " pm";
+            String horaActualPM = "Última actualización\n"+"A las " + hora +" horas" + " pm";
             mHoraActual.setText(horaActualPM);
 
 
