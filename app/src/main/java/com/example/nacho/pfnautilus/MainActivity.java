@@ -31,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -201,24 +202,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void horaActual(){
         Calendar calendario=new GregorianCalendar();
-        int hora;
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
+
+        String time;
+        String ampm = "";
         String minutos;
         String segundos;
+        int am;
 
-        hora=(calendario.get(Calendar.HOUR_OF_DAY));
-        minutos=String.valueOf((calendario.get(Calendar.MINUTE)));
-        if(minutos.charAt(0)==0){
-            minutos="0"+minutos;
+
+        time= timeFormat.format(calendario.getTime());
+        minutos=timeFormat.format((calendario.get(Calendar.MINUTE)));
+        am=calendario.get(Calendar.AM_PM);
+        if(am==0){
+            ampm="am";
+
+        }else{
+            ampm="pm";
         }
 
 
-            String horaActualAM = "Última actualización\n" +"A las " + hora+":"+minutos;
+            String horaActualAM = "Última actualización\n" +"A la/s " + time+" "+ampm;
             mHoraActual.setText(horaActualAM);
-
-
-
-
-
 
 
     }
